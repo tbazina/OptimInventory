@@ -32,6 +32,7 @@ MANIFEST
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
+*.exe
 
 # Installer logs
 pip-log.txt
@@ -81,6 +82,12 @@ target/
 profile_default/
 ipython_config.py
 
+# PyCharm
+.idea/
+
+# Vim
+.gitignore~
+
 # pyenv
 .python-version
 
@@ -127,3 +134,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Individual files and folders
+Optimizacija_upravljanja_zalihama_dobavljackih_lanaca_Doktorski_rad_Zic.pdf
+setup/
+OptimInventory.png
+430-99-PRO-554-1-5-333-1-0,001-NE.csv
+5846287_N100_AVER100.0_SD22.0_T0.0001_SIG0.95-1.0_11-12-16.csv
+73-99-PRO-134-1-7-333-0-0,001-NE.csv
+BL783,27000.xlsx
+OptimInventoryProvjera.xlsx

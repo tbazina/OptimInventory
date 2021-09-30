@@ -1,0 +1,110 @@
+_______________________________________________________________________________
+PITANJA:
+
+1. Dobavljači rade 6 dana u tjednu?
+2. PZPT > od određenog postotka (preskakanje rezultata), maksimalne zalihe --> min?
+3. Backlog uključen - ulaziti u minus sa zalihama?
+4. Dodati parametar - period provjere razine zaliha (!= 1 dan)?
+5. Dani dobave zapravo takt dobave (ne uzima u obzir prvi i zadnji dan)?
+6. Veličina narudžbe višekratnik min količine narudžbe?
+7. Zaokružiti veličinu na niži, viši ili bliži višekratnik min količine narudžbe?
+8. Veličina narudžbe mora biti samo veća od min narudžbe (ne i višekratnik)?
+9. Nesinkroniziranost radnih dana - naručivanje i subotom i nedjeljom?
+10. Nesinkroniziranost radnih dana - nema nadopune zaliha subotom i nedjeljom?
+11. Nesinkroniziranost radnih dana - efektivno naručivanje ponedjeljkom?
+12. Nesinkroniziranost radnih dana - gomilanje zaliha npr. utorkom?
+13. Uzeti maksimalnu razinu zaliha kao početnu razinu za simulaciju?
+14. Neuronske mreže za oblikovanje funkcije cilja?
+15. Ime izlazne datoteke?
+16. Izgled grafičkog sučelja?
+17. Dodatne opcije programa?
+
+
+_______________________________________________________________________________
+IZRADA:
+
+1. 3D plot simulacije (minimalne zalihe, maksimalne zalihe, PZPT)
+  - izgled funkcije cilja
+  - odabir optimizacijskog algoritma
+
+
+_______________________________________________________________________________
+OPTIMIZACIJSKI PROBLEM:
+
+1. maksimalne zalihe --> min
+  2. minimalne zalihe --> min
+ograničenja:
+  % >= PZPT po proizvodima >= %
+    ili
+  % >= PZPT po danima >= %
+
+
+_______________________________________________________________________________
+MOGUĆI OPTIMIZACIJSKI PROBLEM:
+
+1. maksimalne zalihe --> min
+  2. minimalne zalihe --> min
+ograničenja:
+  PZPT po proizvodima >= %
+    i
+  PZPT po danima >= %
+
+
+_______________________________________________________________________________
+ULAZNI PARAMETRI:
+
+1. Dnevna potražnja po danima
+  - string
+  - n-dimenzionalna matrica
+  - put do vanjske datoteke
+  - put do foldera kod paralelne obrade
+
+2. Početna razina zaliha
+  - int
+  - moguće odrediti preko maksimalne razine zaliha?
+
+3. Maksimalna razina zaliha - donja granica pretrage
+  - int
+
+4. Maksimalna razina zaliha - gornja granica pretrage
+  - int
+
+5. Minimalna razina zaliha - donja granica pretrage
+  - int
+
+6. Minimalna razina zaliha - gornja granica pretrage
+  - int
+  - postoji samo ako je različita od maksimalne razine zaliha
+
+7. Minimalna veličina narudžbe
+  - int
+  - veličina narudžbe višekratnik minimalne veličine narudžbe
+  - donja granica veličine narudžbe?
+
+8. Dani dobave
+  - int
+
+9. Radno vrijeme dobavljača
+  - opcije (dropdown)
+  - 5/7, 7/7
+  - dodati i opciju 6/7?
+
+10. Postotak zadovoljavanja potražnje tržišta - opcije
+  - opcije (dropdown)
+  - po broju dana
+  - po broju proizvoda
+
+11. Postotak zadovoljavanja potražnje tržišta
+  - float (postotak)
+  - moguće definirati samo kao zahtjev za donju granicu?
+
+12. Postotak zadovoljavanja potražnje tržišta - tolerancijsko polje
+  - float (postotak)
+  - izbaciti ili postaviti kao proizvoljan?
+
+13. Backlog
+  - binary
+
+14. Izlazni folder
+  - string
+  - put do izlaznog foldera

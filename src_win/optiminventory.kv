@@ -1,0 +1,400 @@
+#:kivy 1.10.1
+#:import mp multiprocessing
+#:import gc gc
+#:import FileBrowser kivy.garden.filebrowser.FileBrowser
+
+<OptimInventory>:
+    ulFol: ulFol
+    izlFol: izlFol
+    pocZalExp: pocZalExp
+    maxZalD: maxZalD
+    maxZalG: maxZalG
+    minZalD: minZalD
+    minZalG: minZalG
+    radVrDob: radVrDob
+    radVrSub: radVrSub
+    daniDob: daniDob
+    minNar: minNar
+    pzptProChk: pzptProChk
+    pzptProDPerc: pzptProDPerc
+    pzptProGPerc: pzptProGPerc
+    pzptDanChk: pzptDanChk
+    pzptDanDPerc: pzptDanDPerc
+    pzptDanGPerc: pzptDanGPerc
+    velDobChk: velDobChk
+    velDobD: velDobD
+    velDobG: velDobG
+    blChk: blChk
+    blDPerc: blDPerc
+    blGPerc: blGPerc
+    proc_num: proc_num
+    diagStopPerc: diagStopPerc
+    email_chk: email_chk
+    recipient: recipient
+    smtp_server: smtp_server
+    sender: sender
+    password_snd: password_snd
+    sprNaj: sprNaj
+#    Main button
+    main_button: main_button
+
+# max_proc,
+    orientation: 'vertical'
+    padding: [10, 0, 20, 30]
+    BoxLayoutHorizontal:
+        padding: [0, 0, 5, 20]
+        BoxLayoutHorizontal:
+            padding: [15, 0]
+            VarLabel:
+                text: 'Load\nFiles'
+            TextInputText:
+                hint_text: 'Path to folder or file'
+                id: ulFol
+            ButtonBrowse:
+                on_release: root.show_load('ulFol')
+        BoxLayoutHorizontal:
+            padding: [15, 0]
+            VarLabel:
+                text: 'Output\nDirectory'
+            TextInputText:
+                hint_text: 'Path to folder'
+                id: izlFol
+            ButtonBrowse:
+                on_release: root.show_load('izlFol')
+    BoxLayoutHorizontal:
+        padding: [5, 20]
+        GridLayout:
+            size_hint: 1, None
+            height: self.minimum_height
+            spacing: 20
+            cols: 3
+            padding: [0, 0, 20, 0]
+            VarLabel:
+                text: 'Starting inv.\nlevel (PCs)'
+            TextInputInt:
+                id: pocZalExp
+                disabled: True
+                text: '0'
+            BoxLayoutHorizontal:
+                padding: 0
+                spacing: 0
+                size_hint: 1, 1
+                VarLabel:
+                    text: 'Same as\nOUT level'
+                CheckBoxActive:
+                    on_active:
+                        pocZalExp.disabled = self.active
+                        pocZalExp.text = '0'
+            VarLabel:
+                text: 'Order-up-to\nlevel (PCs)'
+            TextInputInt:
+                id: maxZalD
+                text: '1'
+            TextInputInt:
+                id: maxZalG
+                text: '9999'
+            VarLabel:
+                text: 'Reorder-point\nlevel (PCs)'
+            TextInputInt:
+                id: minZalD
+                text: '1'
+            TextInputInt:
+                id: minZalG
+                text: '9999'
+            WidgetEmpty:
+            BoxLayoutHorizontal:
+                LabelSmall:
+                    text: '\nworking days'
+            BoxLayoutHorizontal:
+                LabelSmall:
+                    text: '\nin period'
+            VarLabel:
+                text: 'Supplier\'s\nschedule'
+            TextInputInt:
+                id: radVrDob
+                text: '5'
+            TextInputInt:
+                id: radVrSub
+                text: '7'
+            VarLabel:
+                text: 'Delivery time\n(days)'
+            TextInputInt:
+                id: daniDob
+                text: '0'
+            WidgetEmpty:
+            VarLabel:
+                text: 'MOQ\n(PCs)'
+            TextInputInt:
+                id: minNar
+                text: '1'
+            WidgetEmpty:
+        BoxLayoutVertical:
+            GridLayout:
+                size_hint: 1, None
+                height: self.minimum_height
+                cols: 4
+                spacing: [7, 15]
+                padding: [20, 0, 0, 0]
+                WidgetEmpty:
+                WidgetEmpty:
+                LabelSmall:
+                    text: 'min'
+                LabelSmall:
+                    text: 'max'
+                Switch:
+                    id: pzptProChk
+                    active: True
+                    on_active:
+                        pzptProDPerc.disabled = not self.active
+                        pzptProGPerc.disabled = not self.active
+                VarLabel:
+                    text: 'Fill rate %\n(by products)'
+                TextInputFloat:
+                    id: pzptProDPerc
+                TextInputFloat:
+                    id: pzptProGPerc
+                Switch:
+                    id: pzptDanChk
+                    active: True
+                    on_active:
+                        pzptDanDPerc.disabled = not self.active
+                        pzptDanGPerc.disabled = not self.active
+                VarLabel:
+                    text: 'Fill rate %\n(by days)'
+                TextInputFloat:
+                    id: pzptDanDPerc
+                TextInputFloat:
+                    id: pzptDanGPerc
+                Switch:
+                    id: velDobChk
+                    active: True
+                    on_active:
+                        velDobD.disabled = not self.active
+                        velDobG.disabled = not self.active
+                VarLabel:
+                    text: 'Shipment size\n(PCS)'
+                TextInputInt:
+                    id: velDobD
+                TextInputInt:
+                    id: velDobG
+                Switch:
+                    id: blChk
+                    active: True
+                    on_active:
+                        blDPerc.disabled = not self.active
+                        blGPerc.disabled = not self.active
+                VarLabel:
+                    text: 'Backlog %'
+                TextInputFloat:
+                    id: blDPerc
+                TextInputFloat:
+                    id: blGPerc
+            GridLayout:
+                size_hint: 1, None
+                height: self.minimum_height
+                cols: 4
+                spacing: [7, 20]
+                padding: [20, 60, 0, 0]
+                VarLabel:
+                    text: 'No. of threads\n({} max)'.format(root.max_proc)
+                TextInputInt:
+                    id: proc_num
+                    text: '1'
+                VarLabel:
+                    text: 'Fine search\ntolerance %'
+                TextInputFloat:
+                    id: diagStopPerc
+                    text: '1'
+    GridLayout:
+        size_hint: 1, None
+        height: self.minimum_height
+        cols: 6
+        spacing: [7, 15]
+        padding: [0, 30, 0, 0]
+        WidgetEmpty:
+        WidgetEmpty:
+        LabelSmall:
+            halign: 'left'
+            text: 'Email address'
+        LabelSmall:
+            halign: 'left'
+            text: 'SMTP server'
+        LabelSmall:
+            halign: 'left'
+            text: 'Email from'
+        LabelSmall:
+            halign: 'left'
+            text: 'Password'
+        VarLabel:
+            text: 'Send email\nwhen done'
+        CheckBoxActive:
+            id: email_chk
+            active: False
+            on_active:
+                recipient.disabled = not self.active
+                smtp_server.disabled = not self.active
+                sender.disabled = not self.active
+                password_snd.disabled = not self.active
+        TextInputText:
+            id: recipient
+            hint_text: 'email@example.com'
+            disabled: True
+        TextInputText:
+            id: smtp_server
+            hint_text: 'smtp.example.com'
+            disabled: True
+        TextInputText:
+            id: sender
+            hint_text: 'email@example.com'
+            disabled: True
+        TextInputText:
+            id: password_snd
+            password: True
+            disabled: True
+    BoxLayoutHorizontal:
+        spacing: 80
+        padding: [0, 20, 0, 0]
+        BoxLayoutHorizontal:
+            spacing: 0
+            size_hint: 0.8, None
+            padding: [0, 0]
+            VarLabel:
+                text: 'No. of results'
+            TextInputInt:
+                id: sprNaj
+                text: '1'
+        Button:
+            text: 'START'
+            font_size: '20sp'
+            size: self.texture_size
+            padding: [10, 10]
+            size_hint: 1, None
+            halign: 'center'
+            valign: 'middle'
+            id: main_button
+            on_release: root.main_button_bind()
+        VarLabel:
+            text: 'OptimInventory v3.1'
+
+<LoadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListViewDir:
+            id: filechooser
+            filters: [root.filter_function]
+            on_canceled:
+                self.clear_widgets()
+                root.cancel()
+                gc.collect()
+            on_success:
+                self.clear_widgets()
+                root.load(self.filename)
+                gc.collect()
+
+<ErrorContent>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        Label:
+            size: self.texture_size
+            padding: [10, 3]
+            size_hint: None, 0.7
+            halign: 'left'
+            valign: 'bottom'
+            text: root.err_msg
+        Button:
+            text: "Close"
+            size_hint: None, 0.2
+            on_release: root.close()
+
+<VarLabel@Label>:
+    size: self.texture_size
+    padding: [10, 3]
+    size_hint: None, 1
+    halign: 'left'
+    valign: 'bottom'
+
+<LabelSmall@Label>:
+    size: self.texture_size[0], 0
+    padding: [0, 0]
+    size_hint: 1, None
+    halign: 'center'
+    valign: 'bottom'
+
+<BoxLayoutHorizontal@BoxLayout>:
+    size_hint: 1, None
+    height: self.minimum_height
+    orientation: 'horizontal'
+    padding: [5, 0]
+    spacing: 10
+
+<BoxLayoutVertical@BoxLayout>:
+    size_hint: 1, None
+    height: self.minimum_height
+    orientation: 'vertical'
+    padding: [5, 0]
+    spacing: 10
+
+<TextInputText@TextInput>:
+    height: self.minimum_height
+    size_hint: 1, None
+    valign: 'middle'
+    multiline: False
+    padding: 5
+    allow_copy: True
+    write_tab: False
+    on_focus: if self.focus: self.select_all()
+
+<TextInputInt@TextInput>:
+    input_filter: 'int'
+    height: self.minimum_height
+    size_hint: 1, None
+    valign: 'middle'
+    multiline: False
+    padding: 5
+    allow_copy: True
+    write_tab: False
+    on_focus: if self.focus: self.select_all()
+
+<TextInputFloat@TextInput>:
+    input_filter: 'float'
+    height: self.minimum_height
+    size_hint: 1, None
+    valign: 'middle'
+    multiline: False
+    padding: 5
+    allow_copy: True
+    write_tab: False
+    on_focus: if self.focus: self.select_all()
+
+<PopupInputPath>:
+    id: popupInputPath
+    title: 'Pick a folder containing input files'
+    content: FileChooserListViewDir
+
+<FileChooserListViewDir@FileBrowser>:
+    dirselect: True
+
+<ButtonBrowse@Button>:
+    size: self.texture_size
+    padding: [10, 10]
+    size_hint: None, None
+    halign: 'center'
+    valign: 'middle'
+    text: 'Browse'
+
+<WidgetEmpty@Widget>:
+    size_hint: None, None
+    size: 0, 0
+
+<CheckBoxActive@CheckBox>:
+    active: True
+    size_hint: None, 1
+    size: 30, 0
+
+<OptimInventoryEnd>:
+    text: 'Trial Expired'
+    font_size: '60sp'
